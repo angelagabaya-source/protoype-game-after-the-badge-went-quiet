@@ -8,10 +8,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenuGUI.unity
     guid: b2de3a352d0418c4da84b692b039073f
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/LevelUI.unity
     guid: 8d5b3dcad22be8946bab04e8a2020cd8
   - enabled: 1
+    path: Assets/Scenes/CasesUI.unity
+    guid: 19fc99e6b62f5674da5479ed941c4de5
+  - enabled: 1
+    path: Assets/Scenes/SettingsUI.unity
+    guid: c3d8cebd59479b844bbfe42a8b681e7b
+  - enabled: 0
     path: Assets/Scenes/Case1InspectionScene.unity
     guid: 3318ef09f38c89c4f939e20ea82a26d1
   m_configObjects:

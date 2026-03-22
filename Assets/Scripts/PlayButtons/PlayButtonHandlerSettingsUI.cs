@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayButtonHandlerLevelUI : MonoBehaviour
+public class PlayButtonHandlerSettingsUI : MonoBehaviour
 {
     // This will be called when the Play button is clicked
     public void LoadMainMenuGUI()
