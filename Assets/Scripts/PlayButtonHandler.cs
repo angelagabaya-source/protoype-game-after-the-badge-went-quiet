@@ -4,8 +4,8 @@ using UnityEngine.SceneManagement;
 public class PlayButtonHandler : MonoBehaviour
 {
     // This will be called when the Play button is clicked
-    public void LoadCase1InspectionScene()
+    public void LoadLevelUI()
     {
-        SceneManager.LoadScene("Case1InspectionScene");
+        SceneManager.LoadScene("LevelUI");
     }
 }
