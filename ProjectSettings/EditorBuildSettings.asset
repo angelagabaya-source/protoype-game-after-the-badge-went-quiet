@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SettingsUI.unity
     guid: c3d8cebd59479b844bbfe42a8b681e7b
+  - enabled: 1
+    path: Assets/Scenes/Case1KEEPSCRASHING.unity
+    guid: a5497969d56cd724695b9760e64b8708
   - enabled: 0
     path: Assets/Scenes/Case1InspectionScene.unity
     guid: 3318ef09f38c89c4f939e20ea82a26d1
