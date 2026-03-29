@@ -1,37 +1,48 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 public class ObjectFinder : MonoBehaviour
 {
-    public GameManager gm;
+    private GameManager gm;
+    public LayerMask itemLayer; // Set this to "HiddenItems" in the Inspector
+
+    void Start()
+    {
+        gm = Object.FindFirstObjectByType<GameManager>();
+    }
 
     void Update()
     {
-        // 1. Check for Mouse Click (New Input System)
         if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
         {
-            // 2. IMPORTANT: Ignore click if it's on a UI Button/Panel
-            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
-            {
-                return; 
-            }
+            // 1. Ignore if clicking UI
+            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
 
-            // 3. Raycast to find objects
+            // 2. Raycast ONLY against the Item Layer
             Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit))
+            // We added "itemLayer" here so it ignores the floor/walls
+            if (Physics.Raycast(ray, out hit, 100f, itemLayer))
             {
+                Debug.Log("Hit valid item: " + hit.collider.gameObject.name);
+
                 if (hit.collider.CompareTag("HiddenObject"))
                 {
-                    gm.CrossOffItem(hit.collider.gameObject.name);
-                    hit.collider.gameObject.SetActive(false);
+                    if (gm != null)
+                    {
+                        gm.CrossOffItem(hit.collider.gameObject.name);
+                        hit.collider.gameObject.SetActive(false);
+                    }
                 }
-                else
-                {
-                    gm.SubtractTime(5f);
-                }
+            }
+            else
+            {
+                // If we didn't hit anything on the Item Layer, it's a miss
+                if (gm != null) gm.SubtractTime(5f);
+                Debug.Log("Missed! No hidden item found at this position.");
             }
         }
     }
