@@ -1,69 +1,38 @@
 using UnityEngine;
-using UnityEngine.InputSystem; // Required for Mouse.current
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public class ObjectFinder : MonoBehaviour
 {
-    [Header("Settings")]
-    public string targetLayerName = "HiddenItems"; 
-    public string targetTag = "HiddenObject";
-    public float timePenalty = 5f; // How many seconds to lose on a miss
+    public GameManager gm;
 
     void Update()
     {
-        // Check for mouse click
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        // 1. Check for Mouse Click (New Input System)
+        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
         {
-            PerformClick();
-        }
-    }
-
-    void PerformClick()
-    {
-        Vector2 mousePos = Mouse.current.position.ReadValue();
-        Ray ray = Camera.main.ScreenPointToRay(mousePos);
-        RaycastHit hit;
-
-        // Create a LayerMask that ONLY looks for the "HiddenItems" layer
-        int layerMask = LayerMask.GetMask(targetLayerName);
-
-        // Shoot the ray
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
-        {
-            // SUCCESS: We hit a True Object on the correct layer
-            if (hit.collider.CompareTag(targetTag))
+            // 2. IMPORTANT: Ignore click if it's on a UI Button/Panel
+            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
             {
-                Debug.Log("Found: " + hit.collider.name);
-                FoundObject(hit.collider.gameObject);
+                return; 
             }
-        }
-        else
-        {
-            // MISS: The laser hit nothing on the HiddenItems layer (it hit clutter/walls)
-            ApplyPenalty();
-        }
-    }
 
-    void FoundObject(GameObject obj)
-    {
-        // For now, we hide the object. 
-        // Later, we can add a 'Ding' sound or a particle effect here.
-        obj.SetActive(false);
-    }
+            // 3. Raycast to find objects
+            Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+            RaycastHit hit;
 
-    void ApplyPenalty()
-    {
-        Debug.LogWarning("Missed! Subtracting time...");
-        
-        // Find the GameManager in the scene and tell it to subtract time
-        GameManager gm = Object.FindFirstObjectByType<GameManager>();
-        
-        if (gm != null)
-        {
-            gm.SubtractTime(timePenalty);
-        }
-        else
-        {
-            Debug.LogError("No GameManager found in the scene! Make sure you created one.");
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.collider.CompareTag("HiddenObject"))
+                {
+                    gm.CrossOffItem(hit.collider.gameObject.name);
+                    hit.collider.gameObject.SetActive(false);
+                }
+                else
+                {
+                    gm.SubtractTime(5f);
+                }
+            }
         }
     }
 }

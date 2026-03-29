@@ -1,42 +1,82 @@
 using UnityEngine;
-using TMPro; // Needed for the UI Text
+using TMPro;
+using System.Collections;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
-    public float timeRemaining = 60f; // Start with 60 seconds
-    public bool timerIsRunning = true;
-    public TextMeshProUGUI timerText; // We will link this in a second
+    [Header("UI References")]
+    public TextMeshProUGUI timerText;
+    public GameObject winPanel;
+    public GameObject pausePanel;
+    public List<TextMeshProUGUI> itemTextUI;
+
+    [Header("Settings")]
+    public float timeRemaining = 60f;
+    
+    private bool gameEnded = false;
+    private bool timerIsRunning = true;
+    private int itemsFound = 0;
+
+    void Start()
+    {
+        Time.timeScale = 1f;
+        if (winPanel) winPanel.SetActive(false);
+        if (pausePanel) pausePanel.SetActive(false);
+    }
 
     void Update()
     {
-        if (timerIsRunning)
+        if (timerIsRunning && !gameEnded)
         {
             if (timeRemaining > 0)
             {
                 timeRemaining -= Time.deltaTime;
-                DisplayTime(timeRemaining);
+                UpdateTimerDisplay(timeRemaining);
             }
             else
             {
-                Debug.Log("Time has run out!");
                 timeRemaining = 0;
                 timerIsRunning = false;
-                // Trigger Game Over logic here
+                Debug.Log("Game Over!");
             }
         }
     }
 
-    void DisplayTime(float timeToDisplay)
+    void UpdateTimerDisplay(float timeToDisplay)
     {
         float minutes = Mathf.FloorToInt(timeToDisplay / 60); 
         float seconds = Mathf.FloorToInt(timeToDisplay % 60);
-        timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        if(timerText != null) timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
-    // This is the function our ObjectFinder will call!
     public void SubtractTime(float amount)
     {
+        if (gameEnded) return;
         timeRemaining -= amount;
-        Debug.Log("Penalty! -" + amount + " seconds.");
+    }
+
+    public void CrossOffItem(string itemName)
+    {
+        foreach (TextMeshProUGUI textElement in itemTextUI)
+        {
+            if (textElement.gameObject.name == itemName)
+            {
+                textElement.color = Color.gray;
+                textElement.fontStyle = FontStyles.Strikethrough;
+                itemsFound++;
+                CheckWinCondition();
+            }
+        }
+    }
+
+    void CheckWinCondition()
+    {
+        if (itemsFound >= itemTextUI.Count && !gameEnded)
+        {
+            gameEnded = true;
+            timerIsRunning = false;
+            if(winPanel) winPanel.SetActive(true);
+        }
     }
 }
