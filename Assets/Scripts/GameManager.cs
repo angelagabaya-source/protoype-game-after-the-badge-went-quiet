@@ -119,7 +119,7 @@ public class GameManager : MonoBehaviour
             CanvasGroup cg = panel.GetComponent<CanvasGroup>();
             if (cg != null)
             {
-                StartCoroutine(FadeIn(cg, 1.5f));
+                StartCoroutine(FadeIn(cg, 0.5f));
             }
             else
             {
