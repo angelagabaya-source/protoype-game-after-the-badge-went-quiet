@@ -578,7 +578,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Case1KEEPSCRASHING
+          m_StringArgument: Case2KEEPSCRASHING
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &235383430
@@ -1154,7 +1154,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Case1KEEPSCRASHING
+          m_StringArgument: Case2KEEPSCRASHING
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &415246211
@@ -2946,20 +2946,7 @@ MonoBehaviour:
   gameOverPanel: {fileID: 1176267650}
   pausePanel: {fileID: 300538281}
   timerText: {fileID: 952002532}
-  itemTextUI:
-  - {fileID: 1128486658}
-  - {fileID: 2100528301}
-  - {fileID: 1622974377}
-  - {fileID: 929148370}
-  - {fileID: 970829807}
-  - {fileID: 1168397882}
-  - {fileID: 280965907}
-  - {fileID: 1817413964}
-  - {fileID: 1947057480}
-  - {fileID: 310015212}
-  - {fileID: 744902361}
-  - {fileID: 1384793158}
-  - {fileID: 1652967569}
+  itemTextUI: []
   timeRemaining: 60
 --- !u!1 &970829805
 GameObject:
@@ -3193,7 +3180,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1000233249
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5507,7 +5494,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Case1KEEPSCRASHING
+          m_StringArgument: Case2KEEPSCRASHING
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1831302789
