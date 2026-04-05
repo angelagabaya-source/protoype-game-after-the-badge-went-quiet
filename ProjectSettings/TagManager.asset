@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - HiddenObject
+  - ItemGroup
   layers:
   - Default
   - TransparentFX

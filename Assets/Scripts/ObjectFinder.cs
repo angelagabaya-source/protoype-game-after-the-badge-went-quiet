@@ -5,8 +5,8 @@ using UnityEngine.InputSystem;
 public class ObjectFinder : MonoBehaviour
 {
     private GameManager gm;
-    public LayerMask itemLayer; // Set this to your "HiddenItems" layer
-    public float maxDistance = 500f; // High distance to fix the "Camera Face" issue
+    public LayerMask itemLayer; 
+    public float maxDistance = 1000f; 
 
     void Start()
     {
@@ -15,50 +15,53 @@ public class ObjectFinder : MonoBehaviour
 
     void Update()
     {
-        // 1. Check for Mouse Click
         if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
         {
-            // 2. Ignore if clicking UI (Menus/Buttons)
             if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
 
-            // 3. Create the Raycast
             Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
             RaycastHit hit;
 
-            // 4. Shoot the Raycast only at the Item Layer
+            // DRAW THE LINE: If this line doesn't touch your object, the collider is missing!
+            Debug.DrawRay(ray.origin, ray.direction * maxDistance, Color.red, 3f);
+
             if (Physics.Raycast(ray, out hit, maxDistance, itemLayer))
             {
                 GameObject hitObj = hit.collider.gameObject;
-                Debug.Log("Hit: " + hitObj.name);
+                
+                // DIAGNOSTIC LOG: This tells us exactly what Unity sees
+                Debug.Log($"<color=cyan>HIT DETECTED:</color> {hitObj.name} | Layer: {LayerMask.LayerToName(hitObj.layer)} | Tag: {hitObj.tag}");
 
-                // 5. Check if it's a Hidden Object
                 if (hitObj.CompareTag("HiddenObject"))
                 {
                     if (gm != null)
                     {
-                        // Cross it off the list in GameManager using the object's name
                         gm.CrossOffItem(hitObj.name);
 
-                        // --- THE GROUP CLEAR LOGIC ---
-                        if (hitObj.transform.parent != null)
+                        if (hitObj.transform.parent != null && hitObj.transform.parent.CompareTag("ItemGroup"))
                         {
-                            // If the frame is inside an 'Empty', hide the whole Empty
                             hitObj.transform.parent.gameObject.SetActive(false);
-                            Debug.Log("Cleared Group: " + hitObj.transform.parent.name);
                         }
                         else
                         {
-                            // If it's a single object with no parent, just hide itself
                             hitObj.SetActive(false);
                         }
                     }
                 }
+                else 
+                {
+                    Debug.LogWarning($"<color=orange>REJECTED:</color> {hitObj.name} is on the right layer but is NOT tagged 'HiddenObject'!");
+                }
             }
             else
             {
-                // If we hit nothing on the Item Layer, subtract time
+                // If the Raycast fails completely, check if there's a hidden wall blocking it
+                if (Physics.Raycast(ray, out RaycastHit wallHit, maxDistance))
+                {
+                    Debug.Log($"<color=red>BLOCKED:</color> You clicked, but hit '{wallHit.collider.gameObject.name}' on layer '{LayerMask.LayerToName(wallHit.collider.gameObject.layer)}' which is NOT in your ItemLayer mask.");
+                }
+                
                 if (gm != null) gm.SubtractTime(5f);
-                Debug.Log("Miss! Nothing on the item layer was hit.");
             }
         }
     }
