@@ -10,7 +10,7 @@ public class PersistentMusic : MonoBehaviour
     public AudioSource ambientSource1; 
     public AudioSource ambientSource2; 
 
-    // This "Shortcut" fixes the error in GameManager/PauseManager
+    // Shortcut for older scripts looking for 'audioSource'
     public AudioSource audioSource => musicSource;
 
     [Header("Menu Track")]
@@ -21,8 +21,7 @@ public class PersistentMusic : MonoBehaviour
     public AudioClip levelAmbience1;
     public AudioClip levelAmbience2;
 
-    [Range(0, 1)] 
-    public float defaultVolume = 0.5f;
+    [HideInInspector] public float defaultVolume = 0.5f;
 
     void Awake()
     {
@@ -30,6 +29,10 @@ public class PersistentMusic : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            
+            // Load saved volume immediately on boot
+            defaultVolume = PlayerPrefs.GetFloat("MasterVolume", 0.5f);
+            ApplyVolumeToAll(defaultVolume);
         }
         else
         {
@@ -42,7 +45,8 @@ public class PersistentMusic : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        UpdatePauseVolume(false);
+        // Re-apply the saved volume every time a scene loads
+        ApplyVolumeToAll(defaultVolume);
 
         if (scene.name == "MainMenuGUI" || scene.name == "SettingsUI" || scene.name == "CasesUI")
         {
@@ -62,24 +66,30 @@ public class PersistentMusic : MonoBehaviour
     {
         if (source == null || clip == null) return;
         if (source.clip == clip && source.isPlaying) return;
-
         source.clip = clip;
         source.loop = loop;
         source.Play();
     }
 
-    public void UpdatePauseVolume(bool isPaused)
-    {
-        float targetVol = isPaused ? defaultVolume * 0.3f : defaultVolume;
-        
-        if (musicSource) musicSource.volume = targetVol;
-        if (ambientSource1) ambientSource1.volume = targetVol;
-        if (ambientSource2) ambientSource2.volume = targetVol;
-    }
-
+    // This is what the Slider calls
     public void SetGlobalVolume(float volume)
     {
         defaultVolume = volume;
-        UpdatePauseVolume(false);
+        PlayerPrefs.SetFloat("MasterVolume", volume);
+        ApplyVolumeToAll(volume);
+    }
+
+    public void UpdatePauseVolume(bool isPaused)
+    {
+        // If paused, drop to 30% of whatever the slider is currently set to
+        float targetVol = isPaused ? defaultVolume * 0.3f : defaultVolume;
+        ApplyVolumeToAll(targetVol);
+    }
+
+    private void ApplyVolumeToAll(float vol)
+    {
+        if (musicSource) musicSource.volume = vol;
+        if (ambientSource1) ambientSource1.volume = vol;
+        if (ambientSource2) ambientSource2.volume = vol;
     }
 }

@@ -2009,6 +2009,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   maxDistance: 1000
+  vfxPrefab: {fileID: 1509519173520572390, guid: f0b906593f9cbf241a7d13901a2b8d50, type: 3}
 --- !u!1 &733572646
 GameObject:
   m_ObjectHideFlags: 0

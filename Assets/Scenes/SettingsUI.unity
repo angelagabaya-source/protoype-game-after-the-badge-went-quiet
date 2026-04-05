@@ -555,8 +555,8 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1633795677}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 100
-  m_WholeNumbers: 1
+  m_MaxValue: 1
+  m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2545,6 +2545,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1976100089}
   - component: {fileID: 1976100090}
+  - component: {fileID: 1976100091}
   m_Layer: 5
   m_Name: MusicSlider
   m_TagString: Untagged
@@ -2619,12 +2620,24 @@ MonoBehaviour:
   m_HandleRect: {fileID: 715098606}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 100
-  m_WholeNumbers: 1
-  m_Value: 0
+  m_MaxValue: 1
+  m_WholeNumbers: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1976100091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1976100088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db5a2e225daacd746b98852db39d2276, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VolumeSliderController
 --- !u!1 &2135815317
 GameObject:
   m_ObjectHideFlags: 0

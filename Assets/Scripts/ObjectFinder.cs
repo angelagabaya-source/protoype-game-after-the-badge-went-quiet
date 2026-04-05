@@ -8,6 +8,9 @@ public class ObjectFinder : MonoBehaviour
     public LayerMask itemLayer; 
     public float maxDistance = 1000f; 
 
+    [Header("Discovery Effects")]
+    public GameObject vfxPrefab; // <-- The slot for your Particle System Prefab
+
     void Start()
     {
         gm = Object.FindFirstObjectByType<GameManager>();
@@ -17,27 +20,33 @@ public class ObjectFinder : MonoBehaviour
     {
         if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
         {
+            // Don't click through UI menus
             if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
 
             Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
             RaycastHit hit;
 
-            // DRAW THE LINE: If this line doesn't touch your object, the collider is missing!
-            Debug.DrawRay(ray.origin, ray.direction * maxDistance, Color.red, 3f);
+            // Debug line in Scene View to see your click
+            Debug.DrawRay(ray.origin, ray.direction * maxDistance, Color.green, 2f);
 
             if (Physics.Raycast(ray, out hit, maxDistance, itemLayer))
             {
                 GameObject hitObj = hit.collider.gameObject;
                 
-                // DIAGNOSTIC LOG: This tells us exactly what Unity sees
-                Debug.Log($"<color=cyan>HIT DETECTED:</color> {hitObj.name} | Layer: {LayerMask.LayerToName(hitObj.layer)} | Tag: {hitObj.tag}");
-
                 if (hitObj.CompareTag("HiddenObject"))
                 {
+                    // SPAWN THE EFFECT
+                    if (vfxPrefab != null)
+                    {
+                        // hit.point = the exact surface spot where the ray touched the 3D mesh
+                        Instantiate(vfxPrefab, hit.point, Quaternion.identity);
+                    }
+
                     if (gm != null)
                     {
                         gm.CrossOffItem(hitObj.name);
 
+                        // Handle ItemGroups or single objects
                         if (hitObj.transform.parent != null && hitObj.transform.parent.CompareTag("ItemGroup"))
                         {
                             hitObj.transform.parent.gameObject.SetActive(false);
@@ -48,19 +57,10 @@ public class ObjectFinder : MonoBehaviour
                         }
                     }
                 }
-                else 
-                {
-                    Debug.LogWarning($"<color=orange>REJECTED:</color> {hitObj.name} is on the right layer but is NOT tagged 'HiddenObject'!");
-                }
             }
             else
             {
-                // If the Raycast fails completely, check if there's a hidden wall blocking it
-                if (Physics.Raycast(ray, out RaycastHit wallHit, maxDistance))
-                {
-                    Debug.Log($"<color=red>BLOCKED:</color> You clicked, but hit '{wallHit.collider.gameObject.name}' on layer '{LayerMask.LayerToName(wallHit.collider.gameObject.layer)}' which is NOT in your ItemLayer mask.");
-                }
-                
+                // Penalty for clicking into empty 3D space
                 if (gm != null) gm.SubtractTime(5f);
             }
         }
