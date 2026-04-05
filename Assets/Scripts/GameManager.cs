@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     public List<TextMeshProUGUI> itemTextUI = new List<TextMeshProUGUI>();
 
     [Header("Message System")]
-    public UIMessageSwapper messageSwapper; // Drag your UIMessageSwapper object here
+    public UIMessageSwapper messageSwapper; 
 
     [Header("Game Settings")]
     public float timeRemaining = 60f;
@@ -34,7 +34,6 @@ public class GameManager : MonoBehaviour
             itemTextUI.AddRange(container.GetComponentsInChildren<TextMeshProUGUI>());
         }
 
-        // Auto-find swapper if forgot to drag
         if (messageSwapper == null) messageSwapper = FindFirstObjectByType<UIMessageSwapper>();
     }
 
@@ -64,7 +63,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Call this from your Pause Button
     public void TogglePause()
     {
         if (gameEnded) return;
@@ -73,7 +71,12 @@ public class GameManager : MonoBehaviour
         pausePanel.SetActive(isOpening);
         Time.timeScale = isOpening ? 0f : 1f;
 
-        // If we are opening the pause menu, swap the message!
+        // --- UPDATED: Talk to the Persistent Music instead of forcing a number ---
+        if (PersistentMusic.Instance != null)
+        {
+            PersistentMusic.Instance.UpdatePauseVolume(isOpening);
+        }
+
         if (isOpening && messageSwapper != null)
         {
             messageSwapper.SetRandomPauseMessage();
@@ -86,31 +89,23 @@ public class GameManager : MonoBehaviour
         gameEnded = true;
         timerIsRunning = false;
 
-        // --- NEW: Update the message BEFORE showing the panel ---
-        if (messageSwapper != null)
-        {
-            messageSwapper.SetRandomGameOverMessage();
-        }
+        // Tell music to stop or lower when game is lost
+        if (PersistentMusic.Instance != null) PersistentMusic.Instance.audioSource.Stop();
+
+        if (messageSwapper != null) messageSwapper.SetRandomGameOverMessage();
 
         TriggerEndPanel(gameOverPanel);
     }
 
-    // Rest of your existing functions (UpdateTimerDisplay, CrossOffItem, etc.) stay the same...
-    
+    // ... [Rest of your existing methods: TriggerEndPanel, FadeIn, RestartGame, etc.]
     private void TriggerEndPanel(GameObject panel)
     {
         if (panel != null)
         {
             panel.SetActive(true);
             CanvasGroup cg = panel.GetComponent<CanvasGroup>();
-            if (cg != null)
-            {
-                StartCoroutine(FadeIn(cg, 0.5f));
-            }
-            else
-            {
-                Time.timeScale = 0f; 
-            }
+            if (cg != null) StartCoroutine(FadeIn(cg, 0.5f));
+            else Time.timeScale = 0f;
         }
     }
 
@@ -128,10 +123,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f; 
     }
 
-    public void RestartGame()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
+    public void RestartGame() { SceneManager.LoadScene(SceneManager.GetActiveScene().name); }
 
     void UpdateTimerDisplay(float timeToDisplay)
     {
@@ -140,11 +132,7 @@ public class GameManager : MonoBehaviour
         if(timerText != null) timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
-    public void SubtractTime(float amount)
-    {
-        if (gameEnded) return;
-        timeRemaining -= amount;
-    }
+    public void SubtractTime(float amount) { if (!gameEnded) timeRemaining -= amount; }
 
     public void CrossOffItem(string itemName)
     {
@@ -168,6 +156,7 @@ public class GameManager : MonoBehaviour
         {
             gameEnded = true;
             timerIsRunning = false;
+            if (PersistentMusic.Instance != null) PersistentMusic.Instance.audioSource.Stop();
             TriggerEndPanel(winPanel);
         }
     }

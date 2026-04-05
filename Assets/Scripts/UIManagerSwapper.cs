@@ -9,7 +9,7 @@ public class UIMessageSwapper : MonoBehaviour
 
     [Header("Pause Screen Messages")]
     public string[] pauseMessages = {
-        "Unwashed dishes is doing wonders for my appetite.",
+        "Placeholder",
         "Wife thinks we should've stayed in the city. And I said, in this economy?",
         "Would it be tampering with evidence if we ate the cookies?",
         "The house could use a bigger cabinet.",
