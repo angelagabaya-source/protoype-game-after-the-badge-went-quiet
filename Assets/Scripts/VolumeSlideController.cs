@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public class VolumeSliderController : MonoBehaviour
 {
+    public enum VolumeType { Music, SFX }
+    public VolumeType targetType; // Choose Music or SFX in the Inspector!
     private Slider volumeSlider;
 
     void Start()
@@ -11,10 +13,10 @@ public class VolumeSliderController : MonoBehaviour
 
         if (PersistentMusic.Instance != null)
         {
-            // Sync the slider handle to the current volume
-            volumeSlider.value = PersistentMusic.Instance.defaultVolume;
+            // Sync slider to the correct saved volume
+            float savedVol = (targetType == VolumeType.Music) ? PersistentMusic.Instance.musicVolume : PersistentMusic.Instance.sfxVolume;
+            volumeSlider.value = savedVol;
             
-            // Hook up the event via code to ensure it's "Dynamic"
             volumeSlider.onValueChanged.AddListener(delegate { OnSliderValueChange(); });
         }
     }
@@ -23,7 +25,10 @@ public class VolumeSliderController : MonoBehaviour
     {
         if (PersistentMusic.Instance != null)
         {
-            PersistentMusic.Instance.SetGlobalVolume(volumeSlider.value);
+            if (targetType == VolumeType.Music)
+                PersistentMusic.Instance.SetMusicVolume(volumeSlider.value);
+            else
+                PersistentMusic.Instance.SetSFXVolume(volumeSlider.value);
         }
     }
 }

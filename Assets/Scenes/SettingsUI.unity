@@ -481,13 +481,14 @@ GameObject:
   m_Component:
   - component: {fileID: 585581312}
   - component: {fileID: 585581313}
+  - component: {fileID: 585581314}
   m_Layer: 5
   m_Name: SoundSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &585581312
 RectTransform:
   m_ObjectHideFlags: 0
@@ -557,10 +558,23 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &585581314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 585581311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db5a2e225daacd746b98852db39d2276, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VolumeSliderController
+  targetType: 1
 --- !u!1 &673291626
 GameObject:
   m_ObjectHideFlags: 0
@@ -595,7 +609,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.6730957, y: -2.42}
+  m_AnchoredPosition: {x: 1.6730957, y: -1.183733}
   m_SizeDelta: {x: 5.2373, y: 2.1254}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &673291628
@@ -1063,6 +1077,7 @@ GameObject:
   - component: {fileID: 745465632}
   - component: {fileID: 745465631}
   - component: {fileID: 745465634}
+  - component: {fileID: 745465635}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Untagged
@@ -1191,11 +1206,23 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 745465628}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2cb924b955d7fde439b62013def85df5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayButtonHandlerSettingsUI
+--- !u!114 &745465635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 745465628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a4994ac50df403498e4b381c5c87523, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIButtonSound
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1550,7 +1577,7 @@ RectTransform:
   m_Father: {fileID: 729522333}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 7.6, y: -0.6}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1735,7 +1762,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1385582361
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2312,7 +2339,7 @@ RectTransform:
   m_Father: {fileID: 1654715611}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2572,7 +2599,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1280.14, y: -718.8863}
+  m_AnchoredPosition: {x: -1280.14, y: -717.65}
   m_SizeDelta: {x: 126.6443, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1976100090
@@ -2638,6 +2665,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db5a2e225daacd746b98852db39d2276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VolumeSliderController
+  targetType: 0
 --- !u!1 &2135815317
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,19 +9,30 @@ public class PersistentMusic : MonoBehaviour
     public AudioSource musicSource;    
     public AudioSource ambientSource1; 
     public AudioSource ambientSource2; 
+    public AudioSource sfxSource; // The new 4th speaker for SFX
 
     // Shortcut for older scripts looking for 'audioSource'
     public AudioSource audioSource => musicSource;
 
-    [Header("Menu Track")]
+    [Header("Music & Ambience Tracks")]
     public AudioClip menuMusic;
-
-    [Header("Level Layer Tracks")]
     public AudioClip levelMusic;
     public AudioClip levelAmbience1;
     public AudioClip levelAmbience2;
 
-    [HideInInspector] public float defaultVolume = 0.5f;
+    [Header("SFX Clips")]
+    public AudioClip clickSound;
+    public AudioClip correctSound;
+    public AudioClip wrongSound;
+    public AudioClip winSound;
+    public AudioClip loseSound;
+
+    [Header("Volume Settings")]
+    [HideInInspector] public float musicVolume = 0.5f;
+    [HideInInspector] public float sfxVolume = 0.5f;
+
+    // This is the "old" variable name your slider might still be using
+    public float defaultVolume => musicVolume;
 
     void Awake()
     {
@@ -30,9 +41,12 @@ public class PersistentMusic : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
             
-            // Load saved volume immediately on boot
-            defaultVolume = PlayerPrefs.GetFloat("MasterVolume", 0.5f);
-            ApplyVolumeToAll(defaultVolume);
+            // Load saved volumes
+            musicVolume = PlayerPrefs.GetFloat("MusicVolume", 0.5f);
+            sfxVolume = PlayerPrefs.GetFloat("SFXVolume", 0.5f);
+            
+            ApplyMusicVolume(musicVolume);
+            ApplySFXVolume(sfxVolume);
         }
         else
         {
@@ -45,9 +59,10 @@ public class PersistentMusic : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Re-apply the saved volume every time a scene loads
-        ApplyVolumeToAll(defaultVolume);
+        ApplyMusicVolume(musicVolume);
+        ApplySFXVolume(sfxVolume);
 
+        // Scene Logic
         if (scene.name == "MainMenuGUI" || scene.name == "SettingsUI" || scene.name == "CasesUI")
         {
             PlayTrack(musicSource, menuMusic, true);
@@ -62,6 +77,51 @@ public class PersistentMusic : MonoBehaviour
         }
     }
 
+    // --- SFX METHODS ---
+    public void PlaySFX(AudioClip clip)
+    {
+        if (sfxSource != null && clip != null)
+        {
+            sfxSource.PlayOneShot(clip, sfxVolume);
+        }
+    }
+
+    // --- VOLUME SETTERS (Called by Sliders) ---
+    public void SetMusicVolume(float volume)
+    {
+        musicVolume = volume;
+        PlayerPrefs.SetFloat("MusicVolume", volume);
+        ApplyMusicVolume(musicVolume);
+    }
+
+    public void SetSFXVolume(float volume)
+    {
+        sfxVolume = volume;
+        PlayerPrefs.SetFloat("SFXVolume", volume);
+        ApplySFXVolume(sfxVolume);
+    }
+
+    // Old method support (for Master slider if you only have one)
+    public void SetGlobalVolume(float volume) => SetMusicVolume(volume);
+
+    public void UpdatePauseVolume(bool isPaused)
+    {
+        float targetVol = isPaused ? musicVolume * 0.3f : musicVolume;
+        ApplyMusicVolume(targetVol);
+    }
+
+    private void ApplyMusicVolume(float vol)
+    {
+        if (musicSource) musicSource.volume = vol;
+        if (ambientSource1) ambientSource1.volume = vol;
+        if (ambientSource2) ambientSource2.volume = vol;
+    }
+
+    private void ApplySFXVolume(float vol)
+    {
+        if (sfxSource) sfxSource.volume = vol;
+    }
+
     void PlayTrack(AudioSource source, AudioClip clip, bool loop)
     {
         if (source == null || clip == null) return;
@@ -69,27 +129,5 @@ public class PersistentMusic : MonoBehaviour
         source.clip = clip;
         source.loop = loop;
         source.Play();
-    }
-
-    // This is what the Slider calls
-    public void SetGlobalVolume(float volume)
-    {
-        defaultVolume = volume;
-        PlayerPrefs.SetFloat("MasterVolume", volume);
-        ApplyVolumeToAll(volume);
-    }
-
-    public void UpdatePauseVolume(bool isPaused)
-    {
-        // If paused, drop to 30% of whatever the slider is currently set to
-        float targetVol = isPaused ? defaultVolume * 0.3f : defaultVolume;
-        ApplyVolumeToAll(targetVol);
-    }
-
-    private void ApplyVolumeToAll(float vol)
-    {
-        if (musicSource) musicSource.volume = vol;
-        if (ambientSource1) ambientSource1.volume = vol;
-        if (ambientSource2) ambientSource2.volume = vol;
     }
 }

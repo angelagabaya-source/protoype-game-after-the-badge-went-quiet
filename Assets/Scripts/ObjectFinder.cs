@@ -9,25 +9,18 @@ public class ObjectFinder : MonoBehaviour
     public float maxDistance = 1000f; 
 
     [Header("Discovery Effects")]
-    public GameObject vfxPrefab; // <-- The slot for your Particle System Prefab
+    public GameObject vfxPrefab; 
 
-    void Start()
-    {
-        gm = Object.FindFirstObjectByType<GameManager>();
-    }
+    void Start() { gm = Object.FindFirstObjectByType<GameManager>(); }
 
     void Update()
     {
         if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
         {
-            // Don't click through UI menus
             if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
 
             Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
             RaycastHit hit;
-
-            // Debug line in Scene View to see your click
-            Debug.DrawRay(ray.origin, ray.direction * maxDistance, Color.green, 2f);
 
             if (Physics.Raycast(ray, out hit, maxDistance, itemLayer))
             {
@@ -35,32 +28,29 @@ public class ObjectFinder : MonoBehaviour
                 
                 if (hitObj.CompareTag("HiddenObject"))
                 {
-                    // SPAWN THE EFFECT
+                    // SFX: Play Correct Sound
+                    if (PersistentMusic.Instance) PersistentMusic.Instance.PlaySFX(PersistentMusic.Instance.correctSound);
+
                     if (vfxPrefab != null)
                     {
-                        // hit.point = the exact surface spot where the ray touched the 3D mesh
-                        Instantiate(vfxPrefab, hit.point, Quaternion.identity);
+                        // Add a tiny offset to hit.normal so VFX doesn't clip into the mesh
+                        Instantiate(vfxPrefab, hit.point + (hit.normal * 0.05f), Quaternion.identity);
                     }
 
                     if (gm != null)
                     {
                         gm.CrossOffItem(hitObj.name);
-
-                        // Handle ItemGroups or single objects
                         if (hitObj.transform.parent != null && hitObj.transform.parent.CompareTag("ItemGroup"))
-                        {
                             hitObj.transform.parent.gameObject.SetActive(false);
-                        }
                         else
-                        {
                             hitObj.SetActive(false);
-                        }
                     }
                 }
             }
             else
             {
-                // Penalty for clicking into empty 3D space
+                // SFX: Play Wrong Sound
+                if (PersistentMusic.Instance) PersistentMusic.Instance.PlaySFX(PersistentMusic.Instance.wrongSound);
                 if (gm != null) gm.SubtractTime(5f);
             }
         }

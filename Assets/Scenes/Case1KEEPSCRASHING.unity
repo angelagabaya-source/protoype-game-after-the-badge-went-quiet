@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 2339220}
   - component: {fileID: 2339219}
   - component: {fileID: 2339218}
+  - component: {fileID: 2339221}
   m_Layer: 5
   m_Name: GameOverPanelBack
   m_TagString: Untagged
@@ -252,6 +253,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2339216}
   m_CullTransparentMesh: 1
+--- !u!114 &2339221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2339216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a4994ac50df403498e4b381c5c87523, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIButtonSound
 --- !u!1 &26711192
 GameObject:
   m_ObjectHideFlags: 0
@@ -520,6 +533,7 @@ GameObject:
   - component: {fileID: 235383431}
   - component: {fileID: 235383430}
   - component: {fileID: 235383429}
+  - component: {fileID: 235383432}
   m_Layer: 5
   m_Name: WinPanelRestart
   m_TagString: Untagged
@@ -641,6 +655,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 235383427}
   m_CullTransparentMesh: 1
+--- !u!114 &235383432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 235383427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a4994ac50df403498e4b381c5c87523, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIButtonSound
 --- !u!1 &280965905
 GameObject:
   m_ObjectHideFlags: 0
@@ -1096,6 +1122,7 @@ GameObject:
   - component: {fileID: 415246212}
   - component: {fileID: 415246211}
   - component: {fileID: 415246210}
+  - component: {fileID: 415246213}
   m_Layer: 5
   m_Name: GamePanelRestart
   m_TagString: Untagged
@@ -1217,6 +1244,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 415246208}
   m_CullTransparentMesh: 1
+--- !u!114 &415246213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 415246208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a4994ac50df403498e4b381c5c87523, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIButtonSound
 --- !u!1 &496553229
 GameObject:
   m_ObjectHideFlags: 0
@@ -5864,6 +5903,7 @@ GameObject:
   - component: {fileID: 1831302790}
   - component: {fileID: 1831302789}
   - component: {fileID: 1831302788}
+  - component: {fileID: 1831302791}
   m_Layer: 5
   m_Name: PausePanelRestart
   m_TagString: Untagged
@@ -5985,6 +6025,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1831302786}
   m_CullTransparentMesh: 1
+--- !u!114 &1831302791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1831302786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a4994ac50df403498e4b381c5c87523, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIButtonSound
 --- !u!1 &1857692738
 GameObject:
   m_ObjectHideFlags: 0
@@ -5997,6 +6049,7 @@ GameObject:
   - component: {fileID: 1857692742}
   - component: {fileID: 1857692741}
   - component: {fileID: 1857692740}
+  - component: {fileID: 1857692743}
   m_Layer: 5
   m_Name: WinPanelBack
   m_TagString: Untagged
@@ -6118,6 +6171,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1857692738}
   m_CullTransparentMesh: 1
+--- !u!114 &1857692743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1857692738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a4994ac50df403498e4b381c5c87523, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIButtonSound
 --- !u!1 &1891890217
 GameObject:
   m_ObjectHideFlags: 0
@@ -6396,6 +6461,7 @@ GameObject:
   - component: {fileID: 1976671490}
   - component: {fileID: 1976671489}
   - component: {fileID: 1976671488}
+  - component: {fileID: 1976671491}
   m_Layer: 5
   m_Name: PausePanelBack
   m_TagString: Untagged
@@ -6517,6 +6583,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1976671486}
   m_CullTransparentMesh: 1
+--- !u!114 &1976671491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1976671486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a4994ac50df403498e4b381c5c87523, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIButtonSound
 --- !u!64 &2046789336
 MeshCollider:
   m_ObjectHideFlags: 0

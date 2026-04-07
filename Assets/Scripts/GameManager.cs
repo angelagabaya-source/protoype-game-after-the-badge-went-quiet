@@ -71,10 +71,13 @@ public class GameManager : MonoBehaviour
         pausePanel.SetActive(isOpening);
         Time.timeScale = isOpening ? 0f : 1f;
 
-        // --- UPDATED: Talk to the Persistent Music instead of forcing a number ---
         if (PersistentMusic.Instance != null)
         {
+            // Lower music volume when paused
             PersistentMusic.Instance.UpdatePauseVolume(isOpening);
+            
+            // Play a click sound when the menu opens
+            if (isOpening) PersistentMusic.Instance.PlaySFX(PersistentMusic.Instance.clickSound);
         }
 
         if (isOpening && messageSwapper != null)
@@ -89,15 +92,17 @@ public class GameManager : MonoBehaviour
         gameEnded = true;
         timerIsRunning = false;
 
-        // Tell music to stop or lower when game is lost
-        if (PersistentMusic.Instance != null) PersistentMusic.Instance.audioSource.Stop();
+        // NEW: Play Lose SFX
+        if (PersistentMusic.Instance != null)
+        {
+            PersistentMusic.Instance.PlaySFX(PersistentMusic.Instance.loseSound);
+        }
 
         if (messageSwapper != null) messageSwapper.SetRandomGameOverMessage();
 
         TriggerEndPanel(gameOverPanel);
     }
 
-    // ... [Rest of your existing methods: TriggerEndPanel, FadeIn, RestartGame, etc.]
     private void TriggerEndPanel(GameObject panel)
     {
         if (panel != null)
@@ -156,7 +161,13 @@ public class GameManager : MonoBehaviour
         {
             gameEnded = true;
             timerIsRunning = false;
-            if (PersistentMusic.Instance != null) PersistentMusic.Instance.audioSource.Stop();
+
+            // NEW: Play Win SFX
+            if (PersistentMusic.Instance != null)
+            {
+                PersistentMusic.Instance.PlaySFX(PersistentMusic.Instance.winSound);
+            }
+
             TriggerEndPanel(winPanel);
         }
     }
