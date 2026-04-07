@@ -890,6 +890,7 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
+  - component: {fileID: 963194229}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -971,6 +972,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &963194229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 084656d52a484834aa36b54a92ce7212, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectFinder
+  itemLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  maxDistance: 1000
+  vfxPrefab: {fileID: 5860344817058313879, guid: dc6c97091ba28fc41bf15307cf19476c, type: 3}
 --- !u!1 &1198511742
 GameObject:
   m_ObjectHideFlags: 0
@@ -2207,6 +2225,26 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1850351452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1850351444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66a35d47bf3ea114e96b82ff6875420e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PersistentMusic
+  musicSource: {fileID: 1850351451}
+  ambientSource1: {fileID: 1850351450}
+  ambientSource2: {fileID: 1850351449}
+  menuMusic: {fileID: 8300000, guid: d37ba52d691f38b40a17f986f79af27a, type: 3}
+  levelMusic: {fileID: 8300000, guid: f0045bb33a4be7043aeec084ec0b98a2, type: 3}
+  levelAmbience1: {fileID: 8300000, guid: 83a83cf0e1ee3534b81c708a49f1044e, type: 3}
+  levelAmbience2: {fileID: 0}
+  defaultVolume: 0.5
 --- !u!1 &1905173026
 GameObject:
   m_ObjectHideFlags: 0
@@ -2425,6 +2463,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4239609954011551520, guid: 20385cc6f72302d4c9633322429a34d4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1850351449}
+    - targetCorrespondingSourceObject: {fileID: 4239609954011551520, guid: 20385cc6f72302d4c9633322429a34d4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1850351452}
   m_SourcePrefab: {fileID: 100100000, guid: 20385cc6f72302d4c9633322429a34d4, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

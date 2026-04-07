@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5927919586128860662}
-  - component: {fileID: 1635698621173414626}
   m_Layer: 0
   m_Name: GlobalAudio
   m_TagString: Untagged
@@ -32,23 +31,3 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1635698621173414626
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4239609954011551520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66a35d47bf3ea114e96b82ff6875420e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PersistentMusic
-  musicSource: {fileID: 0}
-  ambientSource1: {fileID: 0}
-  ambientSource2: {fileID: 0}
-  menuMusic: {fileID: 8300000, guid: d37ba52d691f38b40a17f986f79af27a, type: 3}
-  levelMusic: {fileID: 8300000, guid: 83a83cf0e1ee3534b81c708a49f1044e, type: 3}
-  levelAmbience1: {fileID: 8300000, guid: f0045bb33a4be7043aeec084ec0b98a2, type: 3}
-  levelAmbience2: {fileID: 0}
-  defaultVolume: 0.235
