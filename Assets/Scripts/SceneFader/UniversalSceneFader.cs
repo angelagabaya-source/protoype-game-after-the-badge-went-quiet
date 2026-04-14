@@ -6,7 +6,7 @@ using System.Collections;
 public class UniversalSceneFader : MonoBehaviour
 {
     public Image fadeImage;
-    public float fadeDuration = 0.5f;
+    public float fadeDuration = 0.3f;
 
     private void Start()
     {
