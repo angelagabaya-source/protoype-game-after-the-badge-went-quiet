@@ -2946,7 +2946,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1:00
+  m_text: 5:00
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 74c6bfd9ac1a76349b82b37d6040d885, type: 2}
   m_sharedMaterial: {fileID: 6320296349529174480, guid: 74c6bfd9ac1a76349b82b37d6040d885, type: 2}
@@ -3069,7 +3069,7 @@ MonoBehaviour:
   - {fileID: 744902361}
   - {fileID: 1652967569}
   messageSwapper: {fileID: 0}
-  timeRemaining: 60
+  timeRemaining: 300
 --- !u!1 &970829805
 GameObject:
   m_ObjectHideFlags: 0
